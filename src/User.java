@@ -13,11 +13,17 @@ public class User {
      * Formats the first and last name in preparation to be written to the data file.
      * 
      * @return a fixed-width string in line with the data file specifications.
-     */
-    
+     */ 
     public String serialize() {
         return String.format("%1$-" + ATM.FIRST_NAME_WIDTH + "s", firstName) +
             String.format("%1$-" + ATM.LAST_NAME_WIDTH + "s", lastName);
     }
+    
+    public String User(String firstname, String lastname) {
+    	this.firstName = firstName;
+    	this.lastName = lastName;
+    }
+    
+    
 }
 
