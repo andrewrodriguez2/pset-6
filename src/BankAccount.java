@@ -46,5 +46,9 @@ public class BankAccount {
     public int getPin() {
         return pin;
     }
-
+    
+    public long getAccountNo() {
+        return accountNo;
+    }
+    
 }
