@@ -17,7 +17,7 @@ public class ATM {
     /**
      * Constructs a new instance of the ATM class.
      */
-    
+     
     public ATM() {
         this.in = new Scanner(System.in);
         
