@@ -40,6 +40,6 @@ public class BankAccount {
         this.pin = pin;
         this.accountNo = accountNo;
         this.balance = balance;
-
+        this.accountHolder = accountHolder;
     }
 }
