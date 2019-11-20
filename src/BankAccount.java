@@ -55,4 +55,7 @@ public class BankAccount {
         return balance;
     }
     
+    public User getAccountHolder() {
+        return accountHolder;
+    }
 }
