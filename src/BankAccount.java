@@ -58,4 +58,8 @@ public class BankAccount {
     public User getAccountHolder() {
         return accountHolder;
     }
+    
+    public void deposit(double amount) {
+        balance = balance + amount;
+    }
 }
