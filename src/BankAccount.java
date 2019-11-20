@@ -42,4 +42,9 @@ public class BankAccount {
         this.balance = balance;
         this.accountHolder = accountHolder;
     }
+    
+    public int getPin() {
+        return pin;
+    }
+
 }
