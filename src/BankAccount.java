@@ -62,4 +62,8 @@ public class BankAccount {
     public void deposit(double amount) {
         balance = balance + amount;
     }
+    
+    public void withdraw(double amount) {
+        balance = balance - amount;
+    }
 }
