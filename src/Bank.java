@@ -225,5 +225,10 @@ public class Bank {
      * @return the account holder
      */
     
+    private static User parseUser(String account) {        
+        return new User(account.substring(FIRST_NAME_START, FIRST_NAME_END).strip(),
+            account.substring(LAST_NAME_START, LAST_NAME_END).strip()
+        );
+    }
 
 }
