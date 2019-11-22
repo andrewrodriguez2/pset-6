@@ -230,5 +230,15 @@ public class Bank {
             account.substring(LAST_NAME_START, LAST_NAME_END).strip()
         );
     }
-
+    
+    /*
+     * Parses the balance from an account string.
+     * 
+     * @param account a string of text representing account details
+     * @return the account balance
+     */
+    
+    private static double parseBalance(String account) {
+        return Double.parseDouble(account.substring(BALANCE_START).strip());
+    }
 }
