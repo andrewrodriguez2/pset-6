@@ -23,8 +23,8 @@ public class Bank {
     private final static int FIRST_NAME_START = 13;
     private final static int FIRST_NAME_END = 33;
     private final static int LAST_NAME_START = 33;
-    private final static int LAST_NAME_END = 63;
-    private final static int BALANCE_START = 63;
+    private final static int LAST_NAME_END = 62;
+    private final static int BALANCE_START = 62;
     
     private final static String DATA = "data/accounts.dat";		// data file path
     
@@ -68,9 +68,11 @@ public class Bank {
     
     public BankAccount login(long accountNo, int pin) {
         BankAccount bankAccount = getAccount(accountNo);
-        
-        if (bankAccount.getPin() == pin) {
-            return bankAccount;
+
+        if(bankAccount == null) {
+        	return null;
+        } else if(bankAccount.getPin() == pin) {
+        	return bankAccount;
         } else {
             return null;
         }
@@ -89,7 +91,6 @@ public class Bank {
                 return account;
             }
         }
-        
         return null;
     }
     
@@ -112,6 +113,7 @@ public class Bank {
         }
         
         accounts.set(index, account);
+        
     }
     
     /**
@@ -157,8 +159,7 @@ public class Bank {
             System.err.println("Error: Unable to read from data file.");
             
             accounts = null;
-        }
-        
+        }      
         return accounts;
     }
     
@@ -187,8 +188,8 @@ public class Bank {
      * @return the bank account
      */
     
-    private static BankAccount parseBankAccount(String account) {
-        return new BankAccount(Bank.parsePin(account),
+    private static BankAccount parseBankAccount(String account) { 
+    	return new BankAccount(Bank.parsePin(account),
             Bank.parseAccountNo(account),
             Bank.parseBalance(account),
             Bank.parseUser(account)
@@ -224,20 +225,5 @@ public class Bank {
      * @return the account holder
      */
     
-    private static User parseUser(String account) {        
-        return new User(account.substring(FIRST_NAME_START, FIRST_NAME_END).strip(),
-            account.substring(LAST_NAME_START, LAST_NAME_END).strip()
-        );
-    }
-    
-    /*
-     * Parses the balance from an account string.
-     * 
-     * @param account a string of text representing account details
-     * @return the account balance
-     */
-    
-    private static double parseBalance(String account) {
-        return Double.parseDouble(account.substring(BALANCE_START).strip());
-    }
+
 }
