@@ -1,11 +1,19 @@
+import java.text.NumberFormat;
+
+@SuppressWarnings("unused")
 public class BankAccount {
+	
+	@SuppressWarnings("unused")
+	private static long prevAccountNo = 100000000L;
         
     private int pin;
     private long accountNo;
     private double balance;
     private User accountHolder;
+    @SuppressWarnings("unused")
+	private Bank bank;
     
-    ////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
     //                                                                        //
     // Refer to the Simple ATM tutorial to fill in the details of this class. //
     //                                                                        //
@@ -44,26 +52,69 @@ public class BankAccount {
     }
     
     public int getPin() {
-        return pin;
+    	return pin;
     }
     
     public long getAccountNo() {
-        return accountNo;
+    	return accountNo;
     }
     
     public double getBalance() {
-        return balance;
+    	return balance;
     }
     
     public User getAccountHolder() {
-        return accountHolder;
+    	return accountHolder;
     }
     
-    public void deposit(double amount) {
-        balance = balance + amount;
+    public int deposit(double amount) {
+    	if(amount <= 0) {
+    		return ATM.INVALID;
+    	}else if((balance + amount) > ATM.BALANCE_MAX) {
+    		return ATM.MAXIMUM;
+    	}else if(amount = null) {
+    		return ATM.INVALID;
+    	}else {
+    		balance = balance + amount;
+    	}
+    	
+    	return ATM.SUCCESS;
     }
     
-    public void withdraw(double amount) {
-        balance = balance - amount;
-    } 
+    public int withdraw(double amount) {
+    	if(amount <= 0) {
+    		return ATM.INVALID;
+    	}else if(amount > balance) {
+    		return ATM.INSUFFICIENT;
+    	}else if(amount == null) {
+    		return ATM.INVALID;
+    	}else {
+    		balance = balance - amount;
+    	}
+    	
+    	return ATM.SUCCESS;
+    }
+    
+    public int transfer(long accountNo, long transferAccountNo, double amount) {
+    	double accountBalance = bank.getAccount(accountNo).getBalance();
+    	double transAccountBalance = 0.00;
+    	try {
+    		transAccountBalance = bank.getAccount(transferAccountNo).getBalance();
+    	}catch(NullPointerException nfe) {
+    		return ATM.INVALID;
+    	}
+    	
+    	if((accountBalance - amount) < ATM.BALANCE_MIN) {
+    		return ATM.INSUFFICIENT;
+    	} else if((transAccountBalance + amount) > ATM.BALANCE_MAX) {
+    		return ATM.MAXIMUM;
+    	} else if(amount < ATM.TRANSFER_MIN) {
+    		return ATM.INVALID_AMOUNT;
+    	}else if (amount == null) {
+    		return ATM.INVALID_AMOUNT;
+    	}else {
+    		return ATM.SUCCESS;
+    	}
+    }
+    
 }

@@ -7,14 +7,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.String;
 
 public class Bank {
 	
-	/*
-	 * Accounts are read from a fixed-width file. Each account is represented
-	 * as a single line of text. These start and end indexes help to parse the
-	 *line of text into individual account fields.
-	 */
+    /*
+     * Accounts are read from a fixed-width file. Each account is represented
+     * as a single line of text. These start and end indexes help to parse the
+     * line of text into individual account fields.
+     */
     
     private final static int ACCT_START = 0;
     private final static int ACCT_END = 9;
@@ -23,12 +24,12 @@ public class Bank {
     private final static int FIRST_NAME_START = 13;
     private final static int FIRST_NAME_END = 33;
     private final static int LAST_NAME_START = 33;
-    private final static int LAST_NAME_END = 62;
-    private final static int BALANCE_START = 62;
+    private final static int LAST_NAME_END = 63;
+    private final static int BALANCE_START = 63;
     
-    private final static String DATA = "data/accounts.dat";		// data file path
+    private final static String DATA = "data/accounts.dat";    // data file path
     
-    private List<BankAccount> accounts;							// an in-memory list of BankAccount objects
+    private List<BankAccount> accounts;                        // an in-memory list of BankAccount objects
     
     /**
      * Constructs a new instance of the Bank class.
@@ -40,7 +41,7 @@ public class Bank {
         accounts = init();
         
         if (accounts == null) {
-        	throw new IOException();
+            throw new IOException();
         }
     }
     
@@ -53,7 +54,7 @@ public class Bank {
      */
     
     public BankAccount createAccount(int pin, User user) {
-    	accounts.add(new BankAccount(pin, generateAccountNo(), user));
+    	accounts.add(new BankAccount(pin, generateAccountNo(), 0, user));
     	
     	return accounts.get(accounts.size() - 1);
     }
@@ -68,11 +69,9 @@ public class Bank {
     
     public BankAccount login(long accountNo, int pin) {
         BankAccount bankAccount = getAccount(accountNo);
-
-        if(bankAccount == null) {
-        	return null;
-        } else if(bankAccount.getPin() == pin) {
-        	return bankAccount;
+        
+        if (bankAccount.getPin() == pin) {
+            return bankAccount;
         } else {
             return null;
         }
@@ -91,6 +90,7 @@ public class Bank {
                 return account;
             }
         }
+        
         return null;
     }
     
@@ -113,7 +113,6 @@ public class Bank {
         }
         
         accounts.set(index, account);
-        
     }
     
     /**
@@ -159,7 +158,8 @@ public class Bank {
             System.err.println("Error: Unable to read from data file.");
             
             accounts = null;
-        }      
+        }
+        
         return accounts;
     }
     
@@ -188,8 +188,8 @@ public class Bank {
      * @return the bank account
      */
     
-    private static BankAccount parseBankAccount(String account) { 
-    	return new BankAccount(Bank.parsePin(account),
+    private static BankAccount parseBankAccount(String account) {
+        return new BankAccount(Bank.parsePin(account),
             Bank.parseAccountNo(account),
             Bank.parseBalance(account),
             Bank.parseUser(account)
@@ -226,8 +226,8 @@ public class Bank {
      */
     
     private static User parseUser(String account) {        
-        return new User(account.substring(FIRST_NAME_START, FIRST_NAME_END).strip(),
-            account.substring(LAST_NAME_START, LAST_NAME_END).strip()
+        return new User(account.substring(FIRST_NAME_START, FIRST_NAME_END).trim(),
+            account.substring(LAST_NAME_START, LAST_NAME_END).trim()
         );
     }
     
@@ -239,6 +239,6 @@ public class Bank {
      */
     
     private static double parseBalance(String account) {
-        return Double.parseDouble(account.substring(BALANCE_START).strip());
+        return Double.parseDouble(account.substring(BALANCE_START).trim());
     }
 }
